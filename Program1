@@ -272,6 +272,26 @@ mysql> DESC EMPLOYEE;
 5 rows in set (0.00 sec)
 
 
+5)
+mysql> ALTER TABLE STUDENT MODIFY Age int;
+Query OK, 0 rows affected (0.65 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC STUDENT;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int(11)     | NO   | PRI | NULL    |       |
+| Name    | varchar(30) | NO   |     | NULL    |       |
+| Age     | int(11)     | YES  |     | NULL    |       |
+| Adress  | varchar(50) | YES  |     | NULL    |       |
+| Gender  | varchar(1)  | YES  |     | m       |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+
+
+
 
 
 6)
