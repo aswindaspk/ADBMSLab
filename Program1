@@ -1,0 +1,286 @@
+1.1) 
+
+  a) DDL COMMANDS-CREATE
+     1.      Create a table EMPLOYEE have the following fields (emp_id, name,city,dob,adhar_no)
+
+     2.      Create a table STUDENT have the fields(roll_no, name, age, address, gender)and add following constraints on it.
+
+
+               Roll_no – Primary key
+               Name – does not allow null values
+               Age- must be in between (0-99), does not allow null values
+               Gender- default value is ‘m’
+
+    3.      Create a temporary table STUDENT1 of STUDENT relation.
+
+    4.      Create a duplicate table of EMPLOYEE.
+
+    5.        Create an INVOICE database and having following tables.
+
+                      Customer(id, name, address, city, ph_no)
+                      Product(pid,  pname, price (default 0))
+                      Invoice_master(inv_id, cust_id(FK), inv_date)
+                      Invoice_item(inv_id (FK),  pid(FK), quantity)
+   
+b) DDL COMMANDS- ALTER & DROP
+     
+     1. Add a column ‘SSN’ at the first position in the table EMPLOYEE
+     2. Change the data type of the column ‘DOB’  in year the table EMPLOYEE    
+     3. Delete the column ‘emp_id’ the table EMPLOYEE.
+     4. Add  the constraint unique for columns ‘SSN, ‘adhar_no’ the table EMPLOYEE
+     5. Delete the NULL constraint of ‘age’ in the STUDENT table.
+     6. Change the table name EMPLOYEE as PERSON
+     7. Delete the table STUDENT1.
+
+
+
+
+a)
+
+1.
+CREATE TABLE EMPLOYEE(emp_id int primary key,Name varchar(30) not null,City varchar(40),DOB date,aadhaar_no int not null);
+
+Query OK, 0 rows affected (0.60 sec)
+
+desc EMPLOYEE;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| emp_id     | int(11)     | NO   | PRI | NULL    |       |
+| Name       | varchar(30) | NO   |     | NULL    |       |
+| City       | varchar(40) | YES  |     | NULL    |       |
+| DOB        | date        | YES  |     | NULL    |       |
+| aadhaar_no | int(11)     | NO   |     | NULL    |       |
+| SSN        | int(11)     | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+
+2.
+CREATE TABLE STUDENT(roll_no int primary key,Name varchar(30) not null,Age int not null check (Age<=99 and Age>=0),Adress varchar(50),Gender varchar(1) default 'm');
+
+Query OK, 0 rows affected (0.51 sec)
+
+desc STUDENT;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int(11)     | NO   | PRI | NULL    |       |
+| Name    | varchar(30) | NO   |     | NULL    |       |
+| Age     | int(11)     | NO   |     | NULL    |       |
+| Adress  | varchar(50) | YES  |     | NULL    |       |
+| Gender  | varchar(1)  | YES  |     | m       |       |
++---------+-------------+------+-----+---------+-------+
+
+
+
+
+3.
+CREATE TEMPORARY TABLE STUDENT1 AS SELECT * FROM STUDENT;
+Query OK, 0 rows affected (0.00 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+
+
+4.
+CREATE TABLE DUP_EMPLOYEE AS SELECT * FROM EMPLOYEE;
+
+Query OK, 0 rows affected (0.36 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+desc DUP_EMPLOYEE;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| emp_id     | int(11)     | NO   |     | NULL    |       |
+| Name       | varchar(30) | NO   |     | NULL    |       |
+| City       | varchar(40) | YES  |     | NULL    |       |
+| DOB        | date        | YES  |     | NULL    |       |
+| aadhaar_no | int(11)     | NO   |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.02 sec)
+
+
+
+
+
+5.
+CREATE DATABASE INVOICE;
+Query OK, 1 row affected (0.00 sec)
+
+
+
+USE INVOICE;
+Database changed
+
+
+CREATE TABLE CUSTOMER(Id INT PRIMARY KEY,NAME VARCHAR(30),ADDRESS 
+Query OK, 0 rows affected (0.37 sec)
+
+
+DESC CUSTOMER;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Id      | int(11)     | NO   | PRI | NULL    |       |
+| NAME    | varchar(30) | YES  |     | NULL    |       |
+| ADDRESS | varchar(50) | YES  |     | NULL    |       |
+| CITY    | varchar(40) | YES  |     | NULL    |       |
+| PH_NO   | int(11)     | YES  | UNI | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+
+
+
+CREATE TABLE PRODUCT(PID INT PRIMARY KEY,PNAME VARCHAR(30),PRICE INT DEFAULT '0');
+Query OK, 0 rows affected (0.34 sec)
+
+DESC PRODUCT;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| PID   | int(11)     | NO   | PRI | NULL    |       |
+| PNAME | varchar(30) | YES  |     | NULL    |       |
+| PRICE | int(11)     | YES  |     | 0       |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+
+
+
+
+CREATE TABLE INVOICE_MASTER(INV_ID INT,CUST_ID INT,INV_DATE DATE,CONSTRAINT FK_CUST_ID FOREIGN KEY(CUST_ID) REFERENCES CUSTOMER(ID));
+Query OK, 0 rows affected (0.50 sec)
+
+
+
+
+ALTER TABLE INVOICE_MASTER ADD CONSTRAINT C1 PRIMARY KEY(INV_ID);
+Query OK, 0 rows affected (0.67 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+DESC INVOICE_MASTER;
++----------+---------+------+-----+---------+-------+
+| Field    | Type    | Null | Key | Default | Extra |
++----------+---------+------+-----+---------+-------+
+| INV_ID   | int(11) | NO   | PRI | NULL    |       |
+| CUST_ID  | int(11) | YES  | MUL | NULL    |       |
+| INV_DATE | date    | YES  |     | NULL    |       |
++----------+---------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+
+
+
+
+CREATE TABLE INVOICE_ITEM(INV_ID INT,PID INT,QUANTITY INT,CONSTRAINT FK_INVID FOREIGN KEY(INV_ID) REFERENCES INVOICE_MASTER(INV_ID),CONSTRAINT FK_PID FOREIGN KEY(PID) REFERENCES PRODUCT(PID));
+Query OK, 0 rows affected (0.44 sec)
+
+
+DESC INVOICE_ITEM;
++----------+---------+------+-----+---------+-------+
+| Field    | Type    | Null | Key | Default | Extra |
++----------+---------+------+-----+---------+-------+
+| INV_ID   | int(11) | YES  | MUL | NULL    |       |
+| PID      | int(11) | YES  | MUL | NULL    |       |
+| QUANTITY | int(11) | YES  |     | NULL    |       |
++----------+---------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+
+
+b)
+USE Ad;
+
+1)
+ALTER TABLE EMPLOYEE ADD SSN INT;
+Query OK, 0 rows affected (0.81 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+desc EMPLOYEE;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| emp_id     | int(11)     | NO   | PRI | NULL    |       |
+| Name       | varchar(30) | NO   |     | NULL    |       |
+| City       | varchar(40) | YES  |     | NULL    |       |
+| DOB        | date        | YES  |     | NULL    |       |
+| aadhaar_no | int(11)     | NO   |     | NULL    |       |
+| SSN        | int(11)     | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+
+2)
+ALTER TABLE EMPLOYEE MODIFY COLUMN DOB YEAR;
+Query OK, 0 rows affected (1.32 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC EMPLOYEE;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| emp_id     | int(11)     | NO   | PRI | NULL    |       |
+| Name       | varchar(30) | NO   |     | NULL    |       |
+| City       | varchar(40) | YES  |     | NULL    |       |
+| DOB        | year(4)     | YES  |     | NULL    |       |
+| aadhaar_no | int(11)     | NO   |     | NULL    |       |
+| SSN        | int(11)     | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+
+
+3)
+ALTER TABLE EMPLOYEE DROP emp_id;
+Query OK, 0 rows affected (0.83 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+
+mysql> DESC EMPLOYEE;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| Name       | varchar(30) | NO   |     | NULL    |       |
+| City       | varchar(40) | YES  |     | NULL    |       |
+| DOB        | year(4)     | YES  |     | NULL    |       |
+| aadhaar_no | int(11)     | NO   |     | NULL    |       |
+| SSN        | int(11)     | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+
+
+4)
+ALTER TABLE EMPLOYEE ADD CONSTRAINT c1 UNIQUE(SSN,aadhaar_no);
+Query OK, 0 rows affected (0.29 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC EMPLOYEE;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| Name       | varchar(30) | NO   |     | NULL    |       |
+| City       | varchar(40) | YES  |     | NULL    |       |
+| DOB        | year(4)     | YES  |     | NULL    |       |
+| aadhaar_no | int(11)     | NO   |     | NULL    |       |
+| SSN        | int(11)     | YES  | MUL | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+
+
+
+6)
+
+ALTER TABLE EMPLOYEE RENAME TO PERSON;
+Query OK, 0 rows affected (0.15 sec)
+
+
+
+
+7)
+
