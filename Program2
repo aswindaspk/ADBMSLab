@@ -1,0 +1,292 @@
+1.2 DML COMMANDS 
+      a) DML COMMANDS-INSERT
+                       1.      Insert values in EMPLOYEE table.
+                       2.      Insert values in STUDENT table.
+                       3.      Insert values in INVOICE database. 
+     
+      b)DML COMMANDS- UPDATE
+                      1. Update the price of a particular product. 
+                      2. Change the name of city ‘calicut’ to ‘kozhikode’ in the customer table. 
+                      3. Update all prices with 2% of its original price. 
+                      4. Change the address, city, phone number of a particular customer. 
+                      5. Change the quantity of a purchased product of inv_id ‘101’
+
+     c) DML COMMAND- DELETE
+                      1. Delete the record of customer id ‘10001’. 
+                      2. Delete all purchase details of items its quantity less than 2. 
+                      3. Delete the purchase details of product ‘pen’ in the in_id ‘101’. 
+                      4. Delete details of employees who does not have phone number. 
+                      5. Delete all records from STUDENT table. 
+                      6. Delete Invoice details of a particular customer. 
+                      7. Delete the first two records of INVOICE_ITEM table its purchase quantity is high
+
+
+
+
+
+QUERIES
+-------
+
+
+1.2 DML COMMANDS 
+----------------
+
+a) DML COMMANDS-INSERT
+----------------------
+
+
+1.Insert values in EMPLOYEE table.
+---------------------------------
+
+mysql> INSERT INTO EMPLOYEE VALUES('Aswin','Kozhikode',2000,31242343,654728);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES('Maanas','Kozhikode',2001,14753993,8746);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES('Vishnu','Kozhikode',2001,15853993,5446);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES('Minhaj','Malappuram',1999,4563993,562446);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES('Karthik','Perinthalmanna',2001,0963993,912446);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> SELECT * FROM EMPLOYEE;
++---------+----------------+------+------------+--------+
+| Name    | City           | DOB  | aadhaar_no | SSN    |
++---------+----------------+------+------------+--------+
+| Aswin   | Kozhikode      | 2000 |   31242343 | 654728 |
+| Maanas  | Kozhikode      | 2001 |   14753993 |   8746 |
+| Vishnu  | Kozhikode      | 2001 |   15853993 |   5446 |
+| Minhaj  | Malappuram     | 1999 |    4563993 | 562446 |
+| Karthik | Perinthalmanna | 2001 |     963993 | 912446 |
++---------+----------------+------+------------+--------+
+5 rows in set (0.00 sec)
+
+-----------------------------------------------------------------------------------------
+
+2.Insert values in STUDENT table.
+---------------------------------
+
+mysql> INSERT INTO STUDENT VALUES(8,'Aswin',22,'Korangad','m');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT INTO STUDENT VALUES(18,'Maanas',22,'Thamarassery','m');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> INSERT INTO STUDENT VALUES(21,'Minhaj',24,'Edavanna','m');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO STUDENT VALUES(27,'Vishnu',22,'Thamarassery','m');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> SELECT * FROM STUDENT;
++---------+--------+------+--------------+--------+
+| roll_no | Name   | Age  | Adress       | Gender |
++---------+--------+------+--------------+--------+
+|       8 | Aswin  |   22 | Korangad     | m      |
+|      18 | Maanas |   22 | Thamarassery | m      |
+|      21 | Minhaj |   24 | Edavanna     | m      |
+|      27 | Vishnu |   22 | Thamarassery | m      |
++---------+--------+------+--------------+--------+
+4 rows in set (0.00 sec)
+
+-----------------------------------------------------------------------------------------
+
+
+
+
+3.Insert values in INVOICE database.
+------------------------------------
+
+CUSTOMER TABLE
+--------------
+
+mysql> INSERT INTO CUSTOMER VALUES(100,'Aswin','Thamarassery','Kozhikode',9656600778);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> INSERT INTO CUSTOMER VALUES(101,'Maanas','Thamarassery','Kozhikode',9020112197);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO CUSTOMER(Id,NAME,ADDRESS,CITY) VALUES(102,'Vishnu','Thamarassery','Kozhikode');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO CUSTOMER(Id,NAME,ADDRESS,CITY) VALUES(103,'Minhaj','Edavanna','Malappuram');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO CUSTOMER(Id,NAME,ADDRESS,CITY) VALUES(104,'Karthik','Perinthalmanna','Palakkad');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO CUSTOMER VALUES(105,'Hari','Perinthalmanna','Palakkad',9401647892);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> INSERT INTO CUSTOMER VALUES(106,'Vaishnav','Perinthalmanna','Palakkad',8713090012);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> SELECT * FROM CUSTOMER;
++-----+----------+----------------+------------+------------+
+| Id  | NAME     | ADDRESS        | CITY       | PH_NO      |
++-----+----------+----------------+------------+------------+
+| 100 | Aswin    | Thamarassery   | Kozhikode  | 9656600778 |
+| 101 | Maanas   | Thamarassery   | Kozhikode  | 9020112197 |
+| 102 | Vishnu   | Thamarassery   | Kozhikode  |       NULL |
+| 103 | Minhaj   | Edavanna       | Malappuram |       NULL |
+| 104 | Karthik  | Perinthalmanna | Palakkad   |       NULL |
+| 105 | Hari     | Perinthalmanna | Palakkad   | 9401647892 |
+| 106 | Vaishnav | Perinthalmanna | Palakkad   | 8713090012 |
++-----+----------+----------------+------------+------------+
+7 rows in set (0.00 sec)
+
+
+
+PRODUCT TABLE
+-------------
+
+mysql> INSERT INTO PRODUCT VALUES(220,'LEXI PEN',6);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO PRODUCT VALUES(221,'NIRAPARA MATTA RICE',41);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO PRODUCT VALUES(223,'COLGATE T.P',50);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> INSERT INTO PRODUCT VALUES(224,'PEPSI 250',30);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> INSERT INTO PRODUCT VALUES(225,'PEPSI 1L',90);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> INSERT INTO PRODUCT VALUES(226,'LAYS F.P',50);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO PRODUCT VALUES(227,'LAYS F.P',50);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO PRODUCT VALUES(228,'BISCUIT 250',50);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO PRODUCT VALUES(330,'CARROT 1KG',50);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO PRODUCT VALUES(331,'CUCUMBER 1KG',30);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> INSERT INTO PRODUCT VALUES(400,'TOY 5Y',259);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> INSERT INTO PRODUCT VALUES(401,'DINNRSET 10PC',1999);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO PRODUCT VALUES(402,'PROCESSED FOOD F.P',210);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO PRODUCT VALUES(404,'PROCESSED FOOD S.P',140);
+Query OK, 1 row affected (0.04 sec)
+
+
+mysql> SELECT * FROM PRODUCT;
++-----+---------------------+-------+
+| PID | PNAME               | PRICE |
++-----+---------------------+-------+
+| 220 | LEXI PEN            |     6 |
+| 221 | NIRAPARA MATTA RICE |    41 |
+| 223 | COLGATE T.P         |    50 |
+| 224 | PEPSI 250           |    30 |
+| 225 | PEPSI 1L            |    90 |
+| 226 | LAYS F.P            |    50 |
+| 227 | LAYS F.P            |    50 |
+| 228 | BISCUIT 250         |    50 |
+| 330 | CARROT 1KG          |    50 |
+| 331 | CUCUMBER 1KG        |    30 |
+| 400 | TOY 5Y              |   259 |
+| 401 | DINNRSET 10PC       |  1999 |
+| 402 | PROCESSED FOOD F.P  |   210 |
+| 404 | PROCESSED FOOD S.P  |   140 |
++-----+---------------------+-------+
+14 rows in set (0.00 sec)
+
+
+
+
+INVOICE_MASTER TABLE
+--------------------
+
+mysql> INSERT INTO INVOICE_MASTER VALUES(16031,100,2023-03-16);
+ERROR 1292 (22007): Incorrect date value: '2004' for column 'INV_DATE' at row 1
+mysql> INSERT INTO INVOICE_MASTER VALUES(16031,100,'2023-03-16');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO INVOICE_MASTER VALUES(2201236,100,'2023-01-22');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO INVOICE_MASTER VALUES(2201235,101,'2023-01-22');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO INVOICE_MASTER VALUES(2201239,101,'2023-01-22');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> INSERT INTO INVOICE_MASTER VALUES(02022319,101,'2023-02-02');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO INVOICE_MASTER VALUES(0202235,106,'2023-02-02');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO INVOICE_MASTER VALUES(0503235,102,'2023-03-05');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> INSERT INTO INVOICE_MASTER VALUES(0801235,103,'2023-01-08');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO INVOICE_MASTER VALUES(26022309,104,'2023-02-26');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> INSERT INTO INVOICE_MASTER VALUES(11022309,105,'2023-02-11');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> SELECT * FROM INVOICE_MASTER;
++----------+---------+------------+
+| INV_ID   | CUST_ID | INV_DATE   |
++----------+---------+------------+
+|    16031 |     100 | 2023-03-16 |
+|   202235 |     106 | 2023-02-02 |
+|   503235 |     102 | 2023-03-05 |
+|   801235 |     103 | 2023-01-08 |
+|  2022319 |     101 | 2023-02-02 |
+|  2201235 |     101 | 2023-01-22 |
+|  2201236 |     100 | 2023-01-22 |
+|  2201239 |     101 | 2023-01-22 |
+| 11022309 |     105 | 2023-02-11 |
+| 26022309 |     104 | 2023-02-26 |
++----------+---------+------------+
+10 rows in set (0.00 sec)
+
+
+
+INVOICE_ITEM TABLE
+--------------------
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(16031,221,10);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(16031,223,2);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(16031,226,2);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(16031,227,2);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(202235,220,2);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(202235,225,1);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(202235,330,3);
+Query OK, 1 row affected (0.05 sec)
+
+
