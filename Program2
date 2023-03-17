@@ -289,4 +289,4 @@ Query OK, 1 row affected (0.05 sec)
 mysql> INSERT INTO INVOICE_ITEM VALUES(202235,330,3);
 Query OK, 1 row affected (0.05 sec)
 
-
+//DISPLAY INVOICE ITEM TABLE
