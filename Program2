@@ -6,10 +6,10 @@
      
       b)DML COMMANDS- UPDATE
                       1. Update the price of a particular product. 
-                      2. Change the name of city ‘calicut’ to ‘kozhikode’ in the customer table. 
+                      2. Change the name of city ‘kozhikode’ to ‘calicut’ in the customer table. 
                       3. Update all prices with 2% of its original price. 
                       4. Change the address, city, phone number of a particular customer. 
-                      5. Change the quantity of a purchased product of inv_id ‘101’
+                      5. Change the quantity of a purchased product of any inv_id.
 
      c) DML COMMAND- DELETE
                       1. Delete the record of customer id ‘10001’. 
@@ -289,4 +289,265 @@ Query OK, 1 row affected (0.05 sec)
 mysql> INSERT INTO INVOICE_ITEM VALUES(202235,330,3);
 Query OK, 1 row affected (0.05 sec)
 
-//DISPLAY INVOICE ITEM TABLE
+mysql> INSERT INTO INVOICE_ITEM VALUES(503235,401,1);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(801235,400,1);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(2022319,402,2);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(2022319,404,1);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(2201235,404,3);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(2201235,331,3);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(2201235,330,3);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(2201236,225,2);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(2201239,228,1);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(2201239,221,5);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(2201239,223,2);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(2201239,400,2);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(11022309,220,8);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(11022309,225,1);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(26022309,227,1);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> INSERT INTO INVOICE_ITEM VALUES(26022309,226,3);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> SELECT * FROM INVOICE_ITEM;
++----------+------+----------+
+| INV_ID   | PID  | QUANTITY |
++----------+------+----------+
+|    16031 |  221 |       10 |
+|    16031 |  223 |        2 |
+|    16031 |  226 |        2 |
+|    16031 |  227 |        2 |
+|   202235 |  220 |        2 |
+|   202235 |  225 |        1 |
+|   202235 |  330 |        3 |
+|   503235 |  401 |        1 |
+|   801235 |  400 |        1 |
+|  2022319 |  402 |        2 |
+|  2022319 |  404 |        1 |
+|  2201235 |  404 |        3 |
+|  2201235 |  331 |        3 |
+|  2201235 |  330 |        3 |
+|  2201236 |  225 |        2 |
+|  2201239 |  228 |        1 |
+|  2201239 |  221 |        5 |
+|  2201239 |  223 |        2 |
+|  2201239 |  400 |        2 |
+| 11022309 |  220 |        8 |
+| 11022309 |  225 |        1 |
+| 26022309 |  227 |        1 |
+| 26022309 |  226 |        3 |
++----------+------+----------+
+23 rows in set (0.00 sec)
+
+
+-----------------------------------------------------------------------------------------
+
+
+b)DML COMMANDS- UPDATE
+-----------------------
+
+
+1)
+
+mysql> UPDATE PRODUCT SET PRICE=1499 WHERE PID=401;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM PRODUCT;
++-----+---------------------+-------+
+| PID | PNAME               | PRICE |
++-----+---------------------+-------+
+| 220 | LEXI PEN            |     6 |
+| 221 | NIRAPARA MATTA RICE |    41 |
+| 223 | COLGATE T.P         |    50 |
+| 224 | PEPSI 250           |    30 |
+| 225 | PEPSI 1L            |    90 |
+| 226 | LAYS F.P            |    50 |
+| 227 | LAYS F.P            |    50 |
+| 228 | BISCUIT 250         |    50 |
+| 330 | CARROT 1KG          |    50 |
+| 331 | CUCUMBER 1KG        |    30 |
+| 400 | TOY 5Y              |   259 |
+| 401 | DINNRSET 10PC       |  1499 |
+| 402 | PROCESSED FOOD F.P  |   210 |
+| 404 | PROCESSED FOOD S.P  |   140 |
++-----+---------------------+-------+
+14 rows in set (0.00 sec)
+
+
+2)
+
+mysql> SELECT * FROM CUSTOMER;
++-----+----------+----------------+------------+------------+
+| Id  | NAME     | ADDRESS        | CITY       | PH_NO      |
++-----+----------+----------------+------------+------------+
+| 100 | Aswin    | Thamarassery   | Kozhikode  | 9656600778 |
+| 101 | Maanas   | Thamarassery   | Kozhikode  | 9020112197 |
+| 102 | Vishnu   | Thamarassery   | Kozhikode  |       NULL |
+| 103 | Minhaj   | Edavanna       | Malappuram |       NULL |
+| 104 | Karthik  | Perinthalmanna | Palakkad   |       NULL |
+| 105 | Hari     | Perinthalmanna | Palakkad   | 9401647892 |
+| 106 | Vaishnav | Perinthalmanna | Palakkad   | 8713090012 |
++-----+----------+----------------+------------+------------+
+7 rows in set (0.00 sec)
+
+mysql> UPDATE CUSTOMER SET CITY='Calicut' WHERE CITY='Kozhikode';
+Query OK, 3 rows affected (0.07 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> SELECT * FROM CUSTOMER;
++-----+----------+----------------+------------+------------+
+| Id  | NAME     | ADDRESS        | CITY       | PH_NO      |
++-----+----------+----------------+------------+------------+
+| 100 | Aswin    | Thamarassery   | Calicut    | 9656600778 |
+| 101 | Maanas   | Thamarassery   | Calicut    | 9020112197 |
+| 102 | Vishnu   | Thamarassery   | Calicut    |       NULL |
+| 103 | Minhaj   | Edavanna       | Malappuram |       NULL |
+| 104 | Karthik  | Perinthalmanna | Palakkad   |       NULL |
+| 105 | Hari     | Perinthalmanna | Palakkad   | 9401647892 |
+| 106 | Vaishnav | Perinthalmanna | Palakkad   | 8713090012 |
++-----+----------+----------------+------------+------------+
+7 rows in set (0.00 sec)
+
+
+3)
+
+mysql> SELECT * FROM PRODUCT;
++-----+---------------------+-------+
+| PID | PNAME               | PRICE |
++-----+---------------------+-------+
+| 220 | LEXI PEN            |     6 |
+| 221 | NIRAPARA MATTA RICE |    41 |
+| 223 | COLGATE T.P         |    50 |
+| 224 | PEPSI 250           |    30 |
+| 225 | PEPSI 1L            |    90 |
+| 226 | LAYS F.P            |    50 |
+| 227 | LAYS F.P            |    50 |
+| 228 | BISCUIT 250         |    50 |
+| 330 | CARROT 1KG          |    50 |
+| 331 | CUCUMBER 1KG        |    30 |
+| 400 | TOY 5Y              |   259 |
+| 401 | DINNRSET 10PC       |  1499 |
+| 402 | PROCESSED FOOD F.P  |   210 |
+| 404 | PROCESSED FOOD S.P  |   140 |
++-----+---------------------+-------+
+14 rows in set (0.00 sec)
+
+mysql> UPDATE PRODUCT SET PRICE=PRICE-(PRICE*2/100);
+Query OK, 13 rows affected (0.06 sec)
+Rows matched: 14  Changed: 13  Warnings: 0
+
+mysql> SELECT * FROM PRODUCT;
++-----+---------------------+-------+
+| PID | PNAME               | PRICE |
++-----+---------------------+-------+
+| 220 | LEXI PEN            |     6 |
+| 221 | NIRAPARA MATTA RICE |    40 |
+| 223 | COLGATE T.P         |    49 |
+| 224 | PEPSI 250           |    29 |
+| 225 | PEPSI 1L            |    88 |
+| 226 | LAYS F.P            |    49 |
+| 227 | LAYS F.P            |    49 |
+| 228 | BISCUIT 250         |    49 |
+| 330 | CARROT 1KG          |    49 |
+| 331 | CUCUMBER 1KG        |    29 |
+| 400 | TOY 5Y              |   254 |
+| 401 | DINNRSET 10PC       |  1469 |
+| 402 | PROCESSED FOOD F.P  |   206 |
+| 404 | PROCESSED FOOD S.P  |   137 |
++-----+---------------------+-------+
+14 rows in set (0.00 sec)
+
+
+
+4)
+
+mysql> UPDATE CUSTOMER SET ADDRESS='Kuthiravattam',CITY='Kozhikode',PH_NO=9532147890 WHERE ID=102;;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM CUSTOMER;
++-----+----------+----------------+------------+------------+
+| Id  | NAME     | ADDRESS        | CITY       | PH_NO      |
++-----+----------+----------------+------------+------------+
+| 100 | Aswin    | Thamarassery   | Calicut    | 9656600778 |
+| 101 | Maanas   | Thamarassery   | Calicut    | 9020112197 |
+| 102 | Vishnu   | Kuthiravattam  | Kozhikode  | 9532147890 |
+| 103 | Minhaj   | Edavanna       | Malappuram |       NULL |
+| 104 | Karthik  | Perinthalmanna | Palakkad   |       NULL |
+| 105 | Hari     | Perinthalmanna | Palakkad   | 9401647892 |
+| 106 | Vaishnav | Perinthalmanna | Palakkad   | 8713090012 |
++-----+----------+----------------+------------+------------+
+7 rows in set (0.00 sec)
+
+
+
+5)
+
+mysql> UPDATE INVOICE_ITEM SET QUANTITY=15 WHERE INV_ID=16031 AND PID=221;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM INVOICE_ITEM;
++----------+------+----------+
+| INV_ID   | PID  | QUANTITY |
++----------+------+----------+
+|    16031 |  221 |       15 |
+|    16031 |  223 |        2 |
+|    16031 |  226 |        2 |
+|    16031 |  227 |        2 |
+|   202235 |  220 |        2 |
+|   202235 |  225 |        1 |
+|   202235 |  330 |        3 |
+|   503235 |  401 |        1 |
+|   801235 |  400 |        1 |
+|  2022319 |  402 |        2 |
+|  2022319 |  404 |        1 |
+|  2201235 |  404 |        3 |
+|  2201235 |  331 |        3 |
+|  2201235 |  330 |        3 |
+|  2201236 |  225 |        2 |
+|  2201239 |  228 |        1 |
+|  2201239 |  221 |        5 |
+|  2201239 |  223 |        2 |
+|  2201239 |  400 |        2 |
+| 11022309 |  220 |        8 |
+| 11022309 |  225 |        1 |
+| 26022309 |  227 |        1 |
+| 26022309 |  226 |        3 |
++----------+------+----------+
+23 rows in set (0.00 sec)
+
+
+
+
+
+
