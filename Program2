@@ -458,14 +458,14 @@ mysql> SELECT * FROM PRODUCT;
 | 330 | CARROT 1KG          |    50 |
 | 331 | CUCUMBER 1KG        |    30 |
 | 400 | TOY 5Y              |   259 |
-| 401 | DINNRSET 10PC       |  1499 |
+| 401 | DINNRSET 10PC       |  1498 |
 | 402 | PROCESSED FOOD F.P  |   210 |
 | 404 | PROCESSED FOOD S.P  |   140 |
 +-----+---------------------+-------+
 14 rows in set (0.00 sec)
 
-mysql> UPDATE PRODUCT SET PRICE=PRICE-(PRICE*2/100); //PRICE=PRICE+(PRICE*2/100)
-Query OK, 13 rows affected (0.06 sec)
+mysql> UPDATE PRODUCT SET PRICE=PRICE+(PRICE*2/100);
+Query OK, 13 rows affected (0.00 sec)
 Rows matched: 14  Changed: 13  Warnings: 0
 
 mysql> SELECT * FROM PRODUCT;
@@ -473,21 +473,22 @@ mysql> SELECT * FROM PRODUCT;
 | PID | PNAME               | PRICE |
 +-----+---------------------+-------+
 | 220 | LEXI PEN            |     6 |
-| 221 | NIRAPARA MATTA RICE |    40 |
-| 223 | COLGATE T.P         |    49 |
-| 224 | PEPSI 250           |    29 |
-| 225 | PEPSI 1L            |    88 |
-| 226 | LAYS F.P            |    49 |
-| 227 | LAYS F.P            |    49 |
-| 228 | BISCUIT 250         |    49 |
-| 330 | CARROT 1KG          |    49 |
-| 331 | CUCUMBER 1KG        |    29 |
-| 400 | TOY 5Y              |   254 |
-| 401 | DINNRSET 10PC       |  1469 |
-| 402 | PROCESSED FOOD F.P  |   206 |
-| 404 | PROCESSED FOOD S.P  |   137 |
+| 221 | NIRAPARA MATTA RICE |    42 |
+| 223 | COLGATE T.P         |    51 |
+| 224 | PEPSI 250           |    31 |
+| 225 | PEPSI 1L            |    92 |
+| 226 | LAYS F.P            |    51 |
+| 227 | LAYS F.P            |    51 |
+| 228 | BISCUIT 250         |    51 |
+| 330 | CARROT 1KG          |    51 |
+| 331 | CUCUMBER 1KG        |    31 |
+| 400 | TOY 5Y              |   264 |
+| 401 | DINNRSET 10PC       |  1528 |
+| 402 | PROCESSED FOOD F.P  |   214 |
+| 404 | PROCESSED FOOD S.P  |   143 |
 +-----+---------------------+-------+
 14 rows in set (0.00 sec)
+
 
 
 
@@ -617,7 +618,7 @@ mysql> SELECT * FROM INVOICE_ITEM;
 3. Delete the purchase details of product ‘pen’ in the in_id ‘202235’
 ------------------------------------------------------------------
 
-mysql> DELETE FROM INVOICE_ITEM WHERE INV_ID=202235 AND PID=220; 
+mysql> DELETE FROM INVOICE_ITEM WHERE INV_ID=202235 AND PID=220;
 Query OK, 1 row affected (0.05 sec)
 
 mysql> SELECT * FROM INVOICE_ITEM;
@@ -726,4 +727,3 @@ mysql> SELECT * FROM INVOICE_ITEM;
 +---------+------+----------+
 11 rows in set (0.00 sec)
 
-// correction
