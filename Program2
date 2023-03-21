@@ -464,7 +464,7 @@ mysql> SELECT * FROM PRODUCT;
 +-----+---------------------+-------+
 14 rows in set (0.00 sec)
 
-mysql> UPDATE PRODUCT SET PRICE=PRICE-(PRICE*2/100);
+mysql> UPDATE PRODUCT SET PRICE=PRICE-(PRICE*2/100); //PRICE=PRICE+(PRICE*2/100)
 Query OK, 13 rows affected (0.06 sec)
 Rows matched: 14  Changed: 13  Warnings: 0
 
@@ -617,7 +617,7 @@ mysql> SELECT * FROM INVOICE_ITEM;
 3. Delete the purchase details of product ‘pen’ in the in_id ‘202235’
 ------------------------------------------------------------------
 
-mysql> DELETE FROM INVOICE_ITEM WHERE INV_ID=202235 AND PID=220;
+mysql> DELETE FROM INVOICE_ITEM WHERE INV_ID=202235 AND PID=220; 
 Query OK, 1 row affected (0.05 sec)
 
 mysql> SELECT * FROM INVOICE_ITEM;
@@ -725,3 +725,5 @@ mysql> SELECT * FROM INVOICE_ITEM;
 | 2201239 |  400 |        2 |
 +---------+------+----------+
 11 rows in set (0.00 sec)
+
+// correction
