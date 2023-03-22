@@ -1,0 +1,154 @@
+a) TCL COMMANDS
+           1.    Commit
+           2.    Rollback
+           3.    Savepoint
+
+b) DCL COMMAND
+          Create two users user1, user2
+         1.      GRANT
+                    ->Give insert and select privilege to user 1 on customer table in the invoice database.
+                    ->Give update and delete privilege to user 2 on all tables in the invoice database.
+        2.      REVOKE
+                   ->Remove delete privilege of user 2.
+
+
+
+
+a) TCL COMMANDS
+
+1.Commit
+---------
+
+mysql> INSERT INTO EMPLOYEE(NAME,CITY,AADHAAR_NO) VALUES('Abhi','Eranakulam',4635647);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> SELECT * FROM EMPLOYEE;
++---------+----------------+------+------------+--------+
+| Name    | City           | DOB  | aadhaar_no | SSN    |
++---------+----------------+------+------------+--------+
+| Aswin   | KKD            | 2000 |   31242343 | 654728 |
+| Maanas  | Kozhikode      | 2001 |   14753993 |   8746 |
+| Vishnu  | Kozhikode      | 2001 |   15853993 |   5446 |
+| Minhaj  | Malappuram     | 1999 |    4563993 | 562446 |
+| Karthik | Perinthalmanna | 2001 |     963993 | 912446 |
+| Abhi    | Eranakulam     | NULL |    4635647 |   NULL |
++---------+----------------+------+------------+--------+
+6 rows in set (0.00 sec)
+
+2.Rollback
+----------
+
+mysql> DELETE FROM EMPLOYEE WHERE NAME="Abhi";
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEE;
++---------+----------------+------+------------+--------+
+| Name    | City           | DOB  | aadhaar_no | SSN    |
++---------+----------------+------+------------+--------+
+| Aswin   | KKD            | 2000 |   31242343 | 654728 |
+| Maanas  | Kozhikode      | 2001 |   14753993 |   8746 |
+| Vishnu  | Kozhikode      | 2001 |   15853993 |   5446 |
+| Minhaj  | Malappuram     | 1999 |    4563993 | 562446 |
+| Karthik | Perinthalmanna | 2001 |     963993 | 912446 |
++---------+----------------+------+------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> ROLLBACK;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> SELECT * FROM EMPLOYEE;
++---------+----------------+------+------------+--------+
+| Name    | City           | DOB  | aadhaar_no | SSN    |
++---------+----------------+------+------------+--------+
+| Aswin   | KKD            | 2000 |   31242343 | 654728 |
+| Maanas  | Kozhikode      | 2001 |   14753993 |   8746 |
+| Vishnu  | Kozhikode      | 2001 |   15853993 |   5446 |
+| Minhaj  | Malappuram     | 1999 |    4563993 | 562446 |
+| Karthik | Perinthalmanna | 2001 |     963993 | 912446 |
+| Abhi    | Eranakulam     | NULL |    4635647 |   NULL |
++---------+----------------+------+------------+--------+
+6 rows in set (0.00 sec)
+
+
+3.Savepoint
+-----------
+
+
+mysql> INSERT INTO EMPLOYEE VALUES('Richard','Eranakulam',2005,7835647,234565);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SAVEPOINT S1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES('John','Eranakulam',2002,4635647,234545);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SAVEPOINT S2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEE;
++---------+----------------+------+------------+--------+
+| Name    | City           | DOB  | aadhaar_no | SSN    |
++---------+----------------+------+------------+--------+
+| Aswin   | KKD            | 2000 |   31242343 | 654728 |
+| Maanas  | Kozhikode      | 2001 |   14753993 |   8746 |
+| Vishnu  | Kozhikode      | 2001 |   15853993 |   5446 |
+| Minhaj  | Malappuram     | 1999 |    4563993 | 562446 |
+| Karthik | Perinthalmanna | 2001 |     963993 | 912446 |
+| Abhi    | Eranakulam     | NULL |    4635647 |   NULL |
+| Richard | Eranakulam     | 2005 |    7835647 | 234565 |
+| John    | Eranakulam     | 2002 |    4635647 | 234545 |
++---------+----------------+------+------------+--------+
+8 rows in set (0.00 sec)
+
+mysql> ROLLBACK TO S1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEE;
++---------+----------------+------+------------+--------+
+| Name    | City           | DOB  | aadhaar_no | SSN    |
++---------+----------------+------+------------+--------+
+| Aswin   | KKD            | 2000 |   31242343 | 654728 |
+| Maanas  | Kozhikode      | 2001 |   14753993 |   8746 |
+| Vishnu  | Kozhikode      | 2001 |   15853993 |   5446 |
+| Minhaj  | Malappuram     | 1999 |    4563993 | 562446 |
+| Karthik | Perinthalmanna | 2001 |     963993 | 912446 |
+| Abhi    | Eranakulam     | NULL |    4635647 |   NULL |
+| Richard | Eranakulam     | 2005 |    7835647 | 234565 |
++---------+----------------+------+------------+--------+
+7 rows in set (0.00 sec)
+
+
+b) DCL COMMAND
+          Create two users user1, user2
+1.GRANT
+    ->Give insert and select privilege to user 1 on customer table in the invoice database.
+    ->Give update and delete privilege to user 2 on all tables in the invoice database.
+--------------------------------------------------------------------------------------------
+
+
+mysql> CREATE USER USER1@'localhost' IDENTIFIED BY 'pass1';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CREATE USER USER2@'localhost' IDENTIFIED BY 'pass2';
+Query OK, 0 rows affected (0.00 sec)
+
+
+1)GRANT
+-------
+mysql> GRANT INSERT,SELECT ON CUSTOMER TO USER1@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> GRANT UPDATE,DELETE ON INVOICE.* TO USER2@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+
+2.REVOKE
+    ->Remove delete privilege of user 2.
+-----------------------------------------
+
+mysql> REVOKE DELETE ON INVOICE.* FROM USER2@'localhost';
+Query OK, 0 rows affected (0.00 sec)
