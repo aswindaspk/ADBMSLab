@@ -18,7 +18,12 @@ a) TCL COMMANDS
 
 1.Commit
 ---------
-//AUTOCOMMIT OFF
+mysql> SET AUTOCOMMIT=OFF;
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+
 mysql> INSERT INTO EMPLOYEE(NAME,CITY,AADHAAR_NO) VALUES('Abhi','Eranakulam',4635647);
 Query OK, 1 row affected (0.00 sec)
 
@@ -75,7 +80,10 @@ mysql> SELECT * FROM EMPLOYEE;
 
 3.Savepoint
 -----------
-//AUTOCOMMIT OFF
+mysql> SET AUTOCOMMIT=OFF;
+Query OK, 0 rows affected (0.00 sec)
+
+
 
 mysql> INSERT INTO EMPLOYEE VALUES('Richard','Eranakulam',2005,7835647,234565);
 Query OK, 1 row affected (0.00 sec)
@@ -136,20 +144,89 @@ Query OK, 0 rows affected (0.00 sec)
 mysql> CREATE USER USER2@'localhost' IDENTIFIED BY 'pass2';
 Query OK, 0 rows affected (0.00 sec)
 
-//SHOW USERS
+mysql> SELECT user FROM mysql.user;
++------------------+
+| user             |
++------------------+
+| TOM              |
+| USER1            |
+| USER2            |
+| ad               |
+| aswin            |
+| debian-sys-maint |
+| mysql.session    |
+| mysql.sys        |
+| phpmyadmin       |
+| root             |
+| tom              |
+| user             |
+| user0            |
+| user1            |
+| user11           |
+| user12           |
+| user2            |
+| userone          |
+| usertwo          |
++------------------+
+19 rows in set (0.00 sec)
+
+
 1)GRANT
 -------
 mysql> GRANT INSERT,SELECT ON CUSTOMER TO USER1@'localhost';
 Query OK, 0 rows affected (0.00 sec)
 
+
+mysql> GRANT INSERT,SELECT ON CUSTOMER TO USER1@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW GRANTS FOR USER1@'localhost';
++---------------------------------------------------------------------+
+| Grants for USER1@localhost                                          |
++---------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'USER1'@'localhost'                           |
+| GRANT SELECT, INSERT ON `Ad`.`EMPLOYEE` TO 'USER1'@'localhost'      |
+| GRANT SELECT, INSERT ON `INVOICE`.`CUSTOMER` TO 'USER1'@'localhost' |
++---------------------------------------------------------------------+
+3 rows in set (0.00 sec)
+
+
+
 mysql> GRANT UPDATE,DELETE ON INVOICE.* TO USER2@'localhost';
 Query OK, 0 rows affected (0.00 sec)
 
-//SHOW GRANTS
+mysql> GRANT UPDATE,DELETE ON INVOICE.* TO USER2@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW GRANTS FOR USER2@'localhost';
++------------------------------------------------------------+
+| Grants for USER2@localhost                                 |
++------------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'USER2'@'localhost'                  |
+| GRANT UPDATE, DELETE ON `INVOICE`.* TO 'USER2'@'localhost' |
++------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+
+
 2.REVOKE
     ->Remove delete privilege of user 2.
 -----------------------------------------
 
 mysql> REVOKE DELETE ON INVOICE.* FROM USER2@'localhost';
 Query OK, 0 rows affected (0.00 sec)
-//SHOW GRANTS
+
+
+mysql> REVOKE DELETE ON INVOICE.* FROM USER2@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW GRANTS FOR USER2@'localhost';
++----------------------------------------------------+
+| Grants for USER2@localhost                         |
++----------------------------------------------------+
+| GRANT USAGE ON *.* TO 'USER2'@'localhost'          |
+| GRANT UPDATE ON `INVOICE`.* TO 'USER2'@'localhost' |
++----------------------------------------------------+
+2 rows in set (0.00 sec)
+
+
