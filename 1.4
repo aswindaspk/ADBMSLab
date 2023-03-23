@@ -1,0 +1,259 @@
+1.List all customer details.
+----------------------------
+
+mysql> SELECT * FROM CUSTOMER;
++-----+----------+----------------+-----------+------------+
+| Id  | NAME     | ADDRESS        | CITY      | PH_NO      |
++-----+----------+----------------+-----------+------------+
+| 100 | Aswin    | Korangad       | Kozhikode | 9044561120 |
+| 101 | Maanas   | Thamarassery   | Calicut   | 9020112197 |
+| 102 | Vishnu   | Kuthiravattam  | Kozhikode | 9532147890 |
+| 106 | Vaishnav | Perinthalmanna | Palakkad  | 8713090012 |
++-----+----------+----------------+-----------+------------+
+4 rows in set (0.00 sec)
+
+
+
+
+2.List pname, price of all products.
+------------------------------------
+
+
+mysql> SELECT PNAME,PRICE FROM PRODUCT;
++---------------------+-------+
+| PNAME               | PRICE |
++---------------------+-------+
+| LEXI PEN            |     6 |
+| NIRAPARA MATTA RICE |    40 |
+| COLGATE T.P         |    49 |
+| PEPSI 250           |    29 |
+| PEPSI 1L            |    88 |
+| LAYS F.P            |    49 |
+| LAYS F.P            |    49 |
+| BISCUIT 250         |    49 |
+| CARROT 1KG          |    49 |
+| CUCUMBER 1KG        |    29 |
+| TOY 5Y              |   254 |
+| DINNRSET 10PC       |  1469 |
+| PROCESSED FOOD F.P  |   206 |
+| PROCESSED FOOD S.P  |   137 |
++---------------------+-------+
+14 rows in set (0.00 sec)
+
+
+3.List all invoice items, avoid duplicates.
+-------------------------------------------
+
+mysql> SELECT DISTINCT INV_ID FROM INVOICE_ITEM;
++---------+
+| INV_ID  |
++---------+
+|   16031 |
+|  202235 |
+| 2022319 |
+| 2201235 |
+| 2201236 |
+| 2201239 |
++---------+
+6 rows in set (0.03 sec)
+
+
+4.List product price between 50rs and 150rs
+--------------------------------------------
+
+
+mysql> SELECT * FROM PRODUCT WHERE PRICE BETWEEN 50 AND 150;
++-----+--------------------+-------+
+| PID | PNAME              | PRICE |
++-----+--------------------+-------+
+| 225 | PEPSI 1L           |    88 |
+| 404 | PROCESSED FOOD S.P |   137 |
++-----+--------------------+-------+
+2 rows in set (0.00 sec)
+
+5.List the customer details who lives in ‘Kozhikode’,’Palakkad’
+----------------------------------------------------
+
+
+mysql> SELECT * FROM CUSTOMER WHERE CITY="Kozhikode" OR CITY="Palakkad";
++-----+----------+----------------+-----------+------------+
+| Id  | NAME     | ADDRESS        | CITY      | PH_NO      |
++-----+----------+----------------+-----------+------------+
+| 100 | Aswin    | Korangad       | Kozhikode | 9044561120 |
+| 102 | Vishnu   | Kuthiravattam  | Kozhikode | 9532147890 |
+| 106 | Vaishnav | Perinthalmanna | Palakkad  | 8713090012 |
++-----+----------+----------------+-----------+------------+
+3 rows in set (0.00 sec)
+
+
+
+
+6.List the invoice details from 1st January 2023 to 15th February 2023
+-----------------------------------------------------------------------
+
+mysql> SELECT * FROM INVOICE_MASTER WHERE INV_DATE BETWEEN '2023-01-01' AND '2023-02-15';
++---------+---------+------------+
+| INV_ID  | CUST_ID | INV_DATE   |
++---------+---------+------------+
+|  202235 |     106 | 2023-02-02 |
+| 2022319 |     101 | 2023-02-02 |
+| 2201235 |     101 | 2023-01-22 |
+| 2201236 |     100 | 2023-01-22 |
+| 2201239 |     101 | 2023-01-22 |
++---------+---------+------------+
+5 rows in set (0.00 sec)
+
+
+
+7.List the customer details who not live in ‘Palakkad’
+------------------------------------------------------
+
+mysql> SELECT * FROM CUSTOMER WHERE CITY!='Palakkad';
++-----+--------+---------------+-----------+------------+
+| Id  | NAME   | ADDRESS       | CITY      | PH_NO      |
++-----+--------+---------------+-----------+------------+
+| 100 | Aswin  | Korangad      | Kozhikode | 9044561120 |
+| 101 | Maanas | Thamarassery  | Calicut   | 9020112197 |
+| 102 | Vishnu | Kuthiravattam | Kozhikode | 9532147890 |
++-----+--------+---------------+-----------+------------+
+3 rows in set (0.00 sec)
+
+
+
+8.List the customers who have no phone number.
+----------------------------------------------
+
+mysql> SELECT * FROM CUSTOMER WHERE PH_NO IS NULL;
++-----+-------+--------------+------------+-------+
+| Id  | NAME  | ADDRESS      | CITY       | PH_NO |
++-----+-------+--------------+------------+-------+
+| 107 | John  | Kochi        | Kochi      |  NULL |
+| 108 | Vivek | Palarivattam | Kochi      |  NULL |
+| 109 | Vivek | Thammanam    | Trivandrum |  NULL |
++-----+-------+--------------+------------+-------+
+3 rows in set (0.00 sec)
+
+
+
+
+9.Display customer names in descending order.
+---------------------------------------------
+
+mysql> SELECT NAME FROM CUSTOMER ORDER BY NAME ASC;
++----------+
+| NAME     |
++----------+
+| Aswin    |
+| John     |
+| Maanas   |
+| Vaishnav |
+| Vishnu   |
+| Vivek    |
+| Vivek    |
++----------+
+7 rows in set (0.00 sec)
+
+
+
+
+
+10. Display the customer details sorted in ascending by city and descending by names.
+-----------------------------------------------------------------------
+
+mysql> SELECT * FROM CUSTOMER ORDER BY CITY ASC,NAME DESC;
++-----+----------+----------------+------------+------------+
+| Id  | NAME     | ADDRESS        | CITY       | PH_NO      |
++-----+----------+----------------+------------+------------+
+| 101 | Maanas   | Thamarassery   | Calicut    | 9020112197 |
+| 108 | Vivek    | Palarivattam   | Kochi      |       NULL |
+| 107 | John     | Kochi          | Kochi      |       NULL |
+| 110 | Arun     | Kochi          | Kochi      |       NULL |
+| 102 | Vishnu   | Kuthiravattam  | Kozhikode  | 9532147890 |
+| 100 | Aswin    | Korangad       | Kozhikode  | 9044561120 |
+| 106 | Vaishnav | Perinthalmanna | Palakkad   | 8713090012 |
+| 109 | Vivek    | Thammanam      | Trivandrum |       NULL |
++-----+----------+----------------+------------+------------+
+8 rows in set (0.00 sec)
+
+
+
+
+11. Find the customer names start with ‘A’.
+-------------------------------------------
+
+mysql> SELECT NAME FROM CUSTOMER WHERE NAME LIKE 'A%';
++-------+
+| NAME  |
++-------+
+| Aswin |
++-------+
+1 row in set (0.00 sec)
+
+
+
+12. Find the customer names who have ‘e’ or ‘a’ in them.
+--------------------------------------------------------
+
+mysql> SELECT NAME FROM CUSTOMER WHERE NAME LIKE '%a%' OR NAME LIKE '%e%';
++----------+
+| NAME     |
++----------+
+| Aswin    |
+| Maanas   |
+| Vaishnav |
+| Vivek    |
+| Vivek    |
++----------+
+5 rows in set (0.01 sec)
+
+
+
+13. Find the customer names who have at least 3 characters.
+-----------------------------------------------------------
+
+mysql> SELECT NAME FROM CUSTOMER WHERE NAME LIKE '___%';
++----------+
+| NAME     |
++----------+
+| Aswin    |
+| Maanas   |
+| Vishnu   |
+| Vaishnav |
+| John     |
+| Vivek    |
+| Vivek    |
+| Arun     |
++----------+
+8 rows in set (0.00 sec)
+
+
+
+
+
+14. List the names of customers their names have ‘r’ in second position.
+------------------------------------------------------------------
+
+mysql> SELECT NAME FROM CUSTOMER WHERE NAME LIKE '_r%';
++------+
+| NAME |
++------+
+| Arun |
++------+
+1 row in set (0.00 sec)
+
+
+
+15. Find the customer names start with ‘a’ and are at least 3 characters in length
+-------------------------------------------------------------------
+
+
+
+mysql> SELECT NAME FROM CUSTOMER WHERE NAME LIKE 'A__%';
++-------+
+| NAME  |
++-------+
+| Aswin |
+| Arun  |
++-------+
+2 rows in set (0.00 sec)
+
