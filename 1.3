@@ -18,7 +18,7 @@ a) TCL COMMANDS
 
 1.Commit
 ---------
-
+//AUTOCOMMIT OFF
 mysql> INSERT INTO EMPLOYEE(NAME,CITY,AADHAAR_NO) VALUES('Abhi','Eranakulam',4635647);
 Query OK, 1 row affected (0.00 sec)
 
@@ -75,7 +75,7 @@ mysql> SELECT * FROM EMPLOYEE;
 
 3.Savepoint
 -----------
-
+//AUTOCOMMIT OFF
 
 mysql> INSERT INTO EMPLOYEE VALUES('Richard','Eranakulam',2005,7835647,234565);
 Query OK, 1 row affected (0.00 sec)
@@ -136,7 +136,7 @@ Query OK, 0 rows affected (0.00 sec)
 mysql> CREATE USER USER2@'localhost' IDENTIFIED BY 'pass2';
 Query OK, 0 rows affected (0.00 sec)
 
-
+//SHOW USERS
 1)GRANT
 -------
 mysql> GRANT INSERT,SELECT ON CUSTOMER TO USER1@'localhost';
@@ -145,10 +145,11 @@ Query OK, 0 rows affected (0.00 sec)
 mysql> GRANT UPDATE,DELETE ON INVOICE.* TO USER2@'localhost';
 Query OK, 0 rows affected (0.00 sec)
 
-
+//SHOW GRANTS
 2.REVOKE
     ->Remove delete privilege of user 2.
 -----------------------------------------
 
 mysql> REVOKE DELETE ON INVOICE.* FROM USER2@'localhost';
 Query OK, 0 rows affected (0.00 sec)
+//SHOW GRANTS
