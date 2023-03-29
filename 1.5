@@ -1,0 +1,184 @@
+mysql> SELECT * FROM CUSTOMER;
++-----+----------+----------------+------------+------------+
+| Id  | NAME     | ADDRESS        | CITY       | PH_NO      |
++-----+----------+----------------+------------+------------+
+| 100 | Aswin    | Korangad       | Kozhikode  | 9044561120 |
+| 101 | Maanas   | Thamarassery   | Calicut    | 9020112197 |
+| 102 | Vishnu   | Kuthiravattam  | Kozhikode  | 9532147890 |
+| 106 | Vaishnav | Perinthalmanna | Palakkad   | 8713090012 |
+| 107 | John     | Kochi          | Kochi      |       NULL |
+| 108 | Vivek    | Palarivattam   | Kochi      |       NULL |
+| 109 | Vivek    | Thammanam      | Trivandrum |       NULL |
+| 110 | Arun     | Kochi          | Kochi      |       NULL |
++-----+----------+----------------+------------+------------+
+8 rows in set (0.00 sec)
+
+
+mysql> SELECT * FROM PRODUCT;
++-----+---------------------+-------+
+| PID | PNAME               | PRICE |
++-----+---------------------+-------+
+| 220 | LEXI PEN            |     6 |
+| 221 | NIRAPARA MATTA RICE |    40 |
+| 223 | COLGATE T.P         |    49 |
+| 224 | PEPSI 250           |    29 |
+| 225 | PEPSI 1L            |    88 |
+| 226 | LAYS F.P            |    49 |
+| 227 | LAYS F.P            |    49 |
+| 228 | BISCUIT 250         |    49 |
+| 330 | CARROT 1KG          |    49 |
+| 331 | CUCUMBER 1KG        |    29 |
+| 400 | TOY 5Y              |   254 |
+| 401 | DINNRSET 10PC       |  1469 |
+| 402 | PROCESSED FOOD F.P  |   206 |
+| 404 | PROCESSED FOOD S.P  |   137 |
++-----+---------------------+-------+
+14 rows in set (0.00 sec)
+
+
+
+mysql> SELECT * FROM INVOICE_MASTER;
++---------+---------+------------+
+| INV_ID  | CUST_ID | INV_DATE   |
++---------+---------+------------+
+|   16031 |     100 | 2023-03-16 |
+|  202235 |     106 | 2023-02-02 |
+| 2022319 |     101 | 2023-02-02 |
+| 2201235 |     101 | 2023-01-22 |
+| 2201236 |     100 | 2023-01-22 |
+| 2201239 |     101 | 2023-01-22 |
++---------+---------+------------+
+6 rows in set (0.00 sec)
+
+
+
+mysql> SELECT * FROM INVOICE_ITEM;
++---------+------+----------+
+| INV_ID  | PID  | QUANTITY |
++---------+------+----------+
+|   16031 |  223 |        2 |
+|   16031 |  226 |        2 |
+|   16031 |  227 |        2 |
+|  202235 |  330 |        3 |
+| 2022319 |  402 |        2 |
+| 2201235 |  404 |        3 |
+| 2201235 |  331 |        3 |
+| 2201235 |  330 |        3 |
+| 2201236 |  225 |        2 |
+| 2201239 |  223 |        2 |
+| 2201239 |  400 |        2 |
++---------+------+----------+
+11 rows in set (0.00 sec)
+
+
+
+
+
+
+
+1.List the customer names of invoice date 2nd February 2023.
+------------------------------------------------------------
+
+mysql> SELECT NAME FROM CUSTOMER WHERE Id IN(SELECT CUST_ID FROM INVOICE_MASTER WHERE INV_DATE='2023-02-02');
++----------+
+| NAME     |
++----------+
+| Vaishnav |
+| Maanas   |
++----------+
+2 rows in set (0.01 sec)
+
+
+
+2.List the product name and price of each invoice item.
+-------------------------------------------------------
+
+mysql> SELECT PNAME,PRICE FROM PRODUCT WHERE PID IN(SELECT PID FROM INVOICE_ITEM);
++--------------------+-------+
+| PNAME              | PRICE |
++--------------------+-------+
+| COLGATE T.P        |    49 |
+| PEPSI 1L           |    88 |
+| LAYS F.P           |    49 |
+| LAYS F.P           |    49 |
+| CARROT 1KG         |    49 |
+| CUCUMBER 1KG       |    29 |
+| TOY 5Y             |   254 |
+| PROCESSED FOOD F.P |   206 |
+| PROCESSED FOOD S.P |   137 |
++--------------------+-------+
+9 rows in set (0.00 sec)
+
+
+3.List the product names, only include their purchased quantity more than 2.
+---------------------------------------------------------------------
+
+mysql> SELECT PNAME FROM PRODUCT WHERE PID IN(SELECT PID FROM INVOICE_ITEM WHERE QUANTITY>2);
++--------------------+
+| PNAME              |
++--------------------+
+| CARROT 1KG         |
+| PROCESSED FOOD S.P |
+| CUCUMBER 1KG       |
++--------------------+
+3 rows in set (0.00 sec)
+
+
+
+4.Find the product that has no sale.
+------------------------------------
+
+mysql> SELECT * FROM PRODUCT WHERE PID NOT IN(SELECT PID FROM INVOICE_ITEM);
++-----+---------------------+-------+
+| PID | PNAME               | PRICE |
++-----+---------------------+-------+
+| 220 | LEXI PEN            |     6 |
+| 221 | NIRAPARA MATTA RICE |    40 |
+| 224 | PEPSI 250           |    29 |
+| 228 | BISCUIT 250         |    49 |
+| 401 | DINNRSET 10PC       |  1469 |
++-----+---------------------+-------+
+5 rows in set (0.00 sec)
+
+
+5.List the customer names who purchased the items ‘COLGATE’ and ‘LAYS’.
+------------------------------------------------------------------------
+
+
+mysql> SELECT NAME FROM CUSTOMER WHERE Id IN
+(SELECT CUST_ID FROM INVOICE_MASTER WHERE INV_ID IN
+(SELECT INV_ID FROM INVOICE_ITEM WHERE PID IN(SELECT PID FROM PRODUCT WHERE PNAME="COLGATE%" OR PNAME="LAYS%")));
+
+
+
+6.Display the purchased product details of the customer ’Aswin’.
+---------------------------------------------------------------
+
+mysql> SELECT * FROM PRODUCT WHERE PID IN(SELECT PID FROM INVOICE_ITEM
+WHERE INV_ID IN(SELECT INV_ID FROM INVOICE_MASTER WHERE CUST_ID IN(SELECT Id FROM CUSTOMER WHERE NAME='Aswin')));
++-----+-------------+-------+
+| PID | PNAME       | PRICE |
++-----+-------------+-------+
+| 223 | COLGATE T.P |    49 |
+| 225 | PEPSI 1L    |    88 |
+| 226 | LAYS F.P    |    49 |
+| 227 | LAYS F.P    |    49 |
++-----+-------------+-------+
+4 rows in set (0.03 sec)
+
+
+
+7.List the names of all customers who have purchased at least 2 products, make sure that no duplicate names in the result.
+--------------------------------------------------------------------------------------------------------------------------
+
+
+mysql> SELECT  NAME FROM CUSTOMER WHERE Id IN (SELECT CUST_ID FROM INVOICE_MASTER WHERE INV_ID IN (SELECT INV_ID FROM INVOICE_ITEM GROUP BY INV_ID HAVING COUNT(*)>1));
++--------+
+| NAME   |
++--------+
+| Aswin  |
+| Maanas |
++--------+
+2 rows in set (0.00 sec)
+
+
