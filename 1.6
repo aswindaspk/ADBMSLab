@@ -1,0 +1,55 @@
+1.Create a view for customers who have purchased products.
+----------------------------------------------------------
+
+mysql> CREATE VIEW CP AS SELECT * FROM CUSTOMER WHERE Id IN(SELECT CUST
+_ID FROM INVOICE_MASTER);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> SELECT * FROM CP;
++-----+----------+----------------+-----------+------------+
+| Id  | NAME     | ADDRESS        | CITY      | PH_NO      |
++-----+----------+----------------+-----------+------------+
+| 100 | Aswin    | Korangad       | Kozhikode | 9044561120 |
+| 101 | Maanas   | Thamarassery   | Calicut   | 9020112197 |
+| 106 | Vaishnav | Perinthalmanna | Palakkad  | 8713090012 |
++-----+----------+----------------+-----------+------------+
+3 rows in set (0.01 sec)
+
+
+
+
+
+
+2.Create a view for invoice products[cust_name, , inv_id, product_id, quantity]
+-----------------------------------------------------------------------------
+
+
+mysql> CREATE VIEW INVOICE_PRODUCT AS SELECT CUSTOMER.NAME,INVOICE_MASTER.INV_ID,PRODUCT.PID,INVOICE_ITEM.QUANTITY FROM CUSTOMER INNER JOIN INVOICE_MASTER ON CUSTOMER.Id=INVOICE_MASTER.CUST_ID INNER JOIN INVOICE_ITEM ON INVOICE_MASTER.INV_ID=INVOICE_ITEM.INV_ID INNER JOIN PRODUCT ON PRODUCT.PID=INVOICE_ITEM.PID;
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> CREATE VIEW CUST_PROD AS SELECT CUSTOMER.NAME,PRODUCT.PID,INVOICE_ITEM.QUANTITY FROM CUSTOMER INNER JOIN INVOICE_MASTER ON CUSTOMER.Id=INVOICE_MASTER.CUST_ID INNER JOIN INVOICE_ITEM ON INVOICE_MASTER.INV_ID=INVOICE_ITEM.INV_ID INNER JOIN PRODUCT ON PRODUCT.PID=INVOICE_ITEM.PID;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> SELECT * FROM CUST_PROD;
++----------+-----+----------+
+| NAME     | PID | QUANTITY |
++----------+-----+----------+
+| Aswin    | 223 |        2 |
+| Aswin    | 226 |        2 |
+| Aswin    | 227 |        2 |
+| Aswin    | 225 |        2 |
+| Maanas   | 402 |        2 |
+| Maanas   | 404 |        3 |
+| Maanas   | 331 |        3 |
+| Maanas   | 330 |        3 |
+| Maanas   | 223 |        2 |
+| Maanas   | 400 |        2 |
+| Vaishnav | 330 |        3 |
++----------+-----+----------+
+11 rows in set (0.00 sec)
+
+
+
+
+
+
