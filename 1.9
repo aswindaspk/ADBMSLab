@@ -1,0 +1,151 @@
+
+
+
+
+
+mysql> SELECT * FROM CUSTOMER;
++-----+----------+----------------+------------+------------+
+| Id  | NAME     | ADDRESS        | CITY       | PH_NO      |
++-----+----------+----------------+------------+------------+
+| 100 | Aswin    | Korangad       | Kozhikode  | 9044561120 |
+| 101 | Maanas   | Thamarassery   | Calicut    | 9020112197 |
+| 102 | Vishnu   | Kuthiravattam  | Kozhikode  | 9532147890 |
+| 106 | Vaishnav | Perinthalmanna | Palakkad   | 8713090012 |
+| 107 | John     | Kochi          | Kochi      |       NULL |
+| 108 | Vivek    | Palarivattam   | Kochi      |       NULL |
+| 109 | Vivek    | Thammanam      | Trivandrum |       NULL |
+| 110 | Arun     | Kochi          | Kochi      |       NULL |
++-----+----------+----------------+------------+------------+
+8 rows in set (0.00 sec)
+
+
+
+mysql> SELECT * FROM PRODUCT;
++-----+---------------------+-------+
+| PID | PNAME               | PRICE |
++-----+---------------------+-------+
+| 220 | LEXI PEN            |     6 |
+| 221 | NIRAPARA MATTA RICE |    40 |
+| 223 | COLGATE T.P         |    49 |
+| 224 | PEPSI 250           |    29 |
+| 225 | PEPSI 1L            |    88 |
+| 226 | LAYS F.P            |    49 |
+| 227 | LAYS F.P            |    49 |
+| 228 | BISCUIT 250         |    49 |
+| 330 | CARROT 1KG          |    49 |
+| 331 | CUCUMBER 1KG        |    29 |
+| 400 | TOY 5Y              |   254 |
+| 401 | DINNRSET 10PC       |  1469 |
+| 402 | PROCESSED FOOD F.P  |   206 |
+| 404 | PROCESSED FOOD S.P  |   137 |
++-----+---------------------+-------+
+14 rows in set (0.00 sec)
+
+
+
+
+
+1.Display customer_id, city  who lives either in ‘CLT’ or in ‘TVM’
+-----------------------------------------------------------------
+
+
+mysql> SELECT Id,CITY FROM CUSTOMER WHERE CITY="Calicut" OR CITY="trivandrum";
++-----+------------+
+| Id  | CITY       |
++-----+------------+
+| 101 | Calicut    |
+| 109 | Trivandrum |
++-----+------------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+2.Display product details with an updated price amount(new price= old price+5rs)
+-------------------------------------------------------------------------
+mysql> SELECT * FROM PRODUCT;
++-----+---------------------+-------+
+| PID | PNAME               | PRICE |
++-----+---------------------+-------+
+| 220 | LEXI PEN            |     6 |
+| 221 | NIRAPARA MATTA RICE |    40 |
+| 223 | COLGATE T.P         |    49 |
+| 224 | PEPSI 250           |    29 |
+| 225 | PEPSI 1L            |    88 |
+| 226 | LAYS F.P            |    49 |
+| 227 | LAYS F.P            |    49 |
+| 228 | BISCUIT 250         |    49 |
+| 330 | CARROT 1KG          |    49 |
+| 331 | CUCUMBER 1KG        |    29 |
+| 400 | TOY 5Y              |   254 |
+| 401 | DINNRSET 10PC       |  1469 |
+| 402 | PROCESSED FOOD F.P  |   206 |
+| 404 | PROCESSED FOOD S.P  |   137 |
++-----+---------------------+-------+
+
+
+mysql> UPDATE PRODUCT SET PRICE=PRICE+5;
+Query OK, 14 rows affected (0.10 sec)
+Rows matched: 14  Changed: 14  Warnings: 0
+
+mysql> SELECT * FROM PRODUCT;
++-----+---------------------+-------+
+| PID | PNAME               | PRICE |
++-----+---------------------+-------+
+| 220 | LEXI PEN            |    11 |
+| 221 | NIRAPARA MATTA RICE |    45 |
+| 223 | COLGATE T.P         |    54 |
+| 224 | PEPSI 250           |    34 |
+| 225 | PEPSI 1L            |    93 |
+| 226 | LAYS F.P            |    54 |
+| 227 | LAYS F.P            |    54 |
+| 228 | BISCUIT 250         |    54 |
+| 330 | CARROT 1KG          |    54 |
+| 331 | CUCUMBER 1KG        |    34 |
+| 400 | TOY 5Y              |   259 |
+| 401 | DINNRSET 10PC       |  1474 |
+| 402 | PROCESSED FOOD F.P  |   211 |
+| 404 | PROCESSED FOOD S.P  |   142 |
++-----+---------------------+-------+
+14 rows in set (0.00 sec)
+
+
+
+
+
+3.Display customer details who doesn’t have phone number and lives in ‘Kochi’ city (use logical operators)
+----------------------------------------------------------------------------
+
+
+mysql> SELECT * FROM CUSTOMER WHERE PH_NO IS NULL AND CITY="Kochi";
++-----+-------+--------------+-------+-------+
+| Id  | NAME  | ADDRESS      | CITY  | PH_NO |
++-----+-------+--------------+-------+-------+
+| 107 | John  | Kochi        | Kochi |  NULL |
+| 108 | Vivek | Palarivattam | Kochi |  NULL |
+| 110 | Arun  | Kochi        | Kochi |  NULL |
++-----+-------+--------------+-------+-------+
+3 rows in set (0.00 sec)
+
+
+
+4.List the product names if it finds any records in the invoice items table has quantity =3 (use special operators)
+-------------------------------------------------------------------------------------
+
+
+mysql> SELECT PNAME FROM PRODUCT WHERE PID IN(SELECT PID FROM INVOICE_ITEM);
++--------------------+
+| PNAME              |
++--------------------+
+| COLGATE T.P        |
+| PEPSI 1L           |
+| LAYS F.P           |
+| LAYS F.P           |
+| CARROT 1KG         |
+| CUCUMBER 1KG       |
+| TOY 5Y             |
+| PROCESSED FOOD F.P |
+| PROCESSED FOOD S.P |
++--------------------+
+9 rows in set (0.00 sec)
