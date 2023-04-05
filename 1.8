@@ -1,0 +1,166 @@
+
+mysql> SELECT * FROM CUSTOMER;
++-----+----------+----------------+------------+------------+
+| Id  | NAME     | ADDRESS        | CITY       | PH_NO      |
++-----+----------+----------------+------------+------------+
+| 100 | Aswin    | Korangad       | Kozhikode  | 9044561120 |
+| 101 | Maanas   | Thamarassery   | Calicut    | 9020112197 |
+| 102 | Vishnu   | Kuthiravattam  | Kozhikode  | 9532147890 |
+| 106 | Vaishnav | Perinthalmanna | Palakkad   | 8713090012 |
+| 107 | John     | Kochi          | Kochi      |       NULL |
+| 108 | Vivek    | Palarivattam   | Kochi      |       NULL |
+| 109 | Vivek    | Thammanam      | Trivandrum |       NULL |
+| 110 | Arun     | Kochi          | Kochi      |       NULL |
++-----+----------+----------------+------------+------------+
+8 rows in set (0.01 sec)
+
+
+
+mysql> SELECT * FROM PRODUCT;
++-----+---------------------+-------+
+| PID | PNAME               | PRICE |
++-----+---------------------+-------+
+| 220 | LEXI PEN            |     6 |
+| 221 | NIRAPARA MATTA RICE |    40 |
+| 223 | COLGATE T.P         |    49 |
+| 224 | PEPSI 250           |    29 |
+| 225 | PEPSI 1L            |    88 |
+| 226 | LAYS F.P            |    49 |
+| 227 | LAYS F.P            |    49 |
+| 228 | BISCUIT 250         |    49 |
+| 330 | CARROT 1KG          |    49 |
+| 331 | CUCUMBER 1KG        |    29 |
+| 400 | TOY 5Y              |   254 |
+| 401 | DINNRSET 10PC       |  1469 |
+| 402 | PROCESSED FOOD F.P  |   206 |
+| 404 | PROCESSED FOOD S.P  |   137 |
++-----+---------------------+-------+
+14 rows in set (0.00 sec)
+
+
+
+mysql> SELECT * FROM INVOICE_MASTER;
++---------+---------+------------+
+| INV_ID  | CUST_ID | INV_DATE   |
++---------+---------+------------+
+|   16031 |     100 | 2023-03-16 |
+|  202235 |     106 | 2023-02-02 |
+| 2022319 |     101 | 2023-02-02 |
+| 2201235 |     101 | 2023-01-22 |
+| 2201236 |     100 | 2023-01-22 |
+| 2201239 |     101 | 2023-01-22 |
++---------+---------+------------+
+6 rows in set (0.00 sec)
+
+
+mysql> SELECT * FROM INVOICE_ITEM;
++---------+------+----------+
+| INV_ID  | PID  | QUANTITY |
++---------+------+----------+
+|   16031 |  223 |        2 |
+|   16031 |  226 |        2 |
+|   16031 |  227 |        2 |
+|  202235 |  330 |        3 |
+| 2022319 |  402 |        2 |
+| 2201235 |  404 |        3 |
+| 2201235 |  331 |        3 |
+| 2201235 |  330 |        3 |
+| 2201236 |  225 |        2 |
+| 2201239 |  223 |        2 |
+| 2201239 |  400 |        2 |
++---------+------+----------+
+11 rows in set (0.00 sec)
+
+
+
+1.List the product name and quantity of invoice items.
+-------------------------------------------------------
+
+
+mysql> SELECT PRODUCT.PNAME,INVOICE_ITEM.QUANTITY FROM PRODUCT INNER JOIN INVOICE_ITEM ON PRODUCT.PID=INVOICE_ITEM.PID;
++--------------------+----------+
+| PNAME              | QUANTITY |
++--------------------+----------+
+| COLGATE T.P        |        2 |
+| LAYS F.P           |        2 |
+| LAYS F.P           |        2 |
+| CARROT 1KG         |        3 |
+| PROCESSED FOOD F.P |        2 |
+| PROCESSED FOOD S.P |        3 |
+| CUCUMBER 1KG       |        3 |
+| CARROT 1KG         |        3 |
+| PEPSI 1L           |        2 |
+| COLGATE T.P        |        2 |
+| TOY 5Y             |        2 |
++--------------------+----------+
+11 rows in set (0.03 sec)
+
+
+
+2.Display invoice details of the transaction dated ’22-01-2023’.
+-------------------------------------------------------------
+
+
+mysql> SELECT INVOICE_MASTER.INV_DATE,INVOICE_MASTER.CUST_ID,CUSTOMER.NAME,INVOICE_ITEM.PID,PRODUCT.PNAME,INVOICE_ITEM.QUANTITY FROM INVOICE_MA
+STER INNE
+R ON CUSTOMER.Id=INVOICE_MASTER.CUST_ID WHERE INV_DATE='2023-01-22';
++------------+---------+--------+------+--------------------+----------+
+| INV_DATE   | CUST_ID | NAME   | PID  | PNAME              | QUANTITY |
++------------+---------+--------+------+--------------------+----------+
+| 2023-01-22 |     101 | Maanas |  404 | PROCESSED FOOD S.P |        3 |
+| 2023-01-22 |     101 | Maanas |  331 | CUCUMBER 1KG       |        3 |
+| 2023-01-22 |     101 | Maanas |  330 | CARROT 1KG         |        3 |
+| 2023-01-22 |     100 | Aswin  |  225 | PEPSI 1L           |        2 |
+| 2023-01-22 |     101 | Maanas |  223 | COLGATE T.P        |        2 |
+| 2023-01-22 |     101 | Maanas |  400 | TOY 5Y             |        2 |
++------------+---------+--------+------+--------------------+----------+
+6 rows in set (0.01 sec)
+
+
+
+
+
+3.Display the customer name, product name, invoice date of purchased item ‘TOY’.
+-------------------------------------------------------------------------
+
+
+mysql> SELECT CUSTOMER.NAME,PRODUCT.PNAME,INVOICE_MASTER.INV_DATE FROM
+CUSTOMER INNER JOIN INVOICE_MASTER ON CUSTOMER.Id=INVOICE_MASTER.CUST_ID INNER JOIN INVOICE_ITEM ON INVOICE_MASTER.INV_ID=INVOICE_ITEM.INV_ID
+INNER JOIN PRODUCT ON INVOICE_ITEM.PID=PRODUCT.PID WHERE PNAME="TOY 5Y";
++--------+--------+------------+
+| NAME   | PNAME  | INV_DATE   |
++--------+--------+------------+
+| Maanas | TOY 5Y | 2023-01-22 |
++--------+--------+------------+
+1 row in set (0.00 sec)
+
+
+
+4.Display all customer details and invoice details must include customer has not purchased items.
+--------------------------------------------------------------------------------
+
+
+mysql> SELECT CUSTOMER.*,INVOICE_ITEM.*,INVOICE_MASTER.* FROM CUSTOMER LEFT JOIN INVOICE_MASTER ON CUSTOMER.Id=INVOICE_MASTER.CUST_ID LEFT JOIN INVOICE_ITEM ON INVOICE_MASTER.INV_ID=INVOICE_ITEM.INV_ID;
++-----+----------+----------------+------------+------------+---------+------+----------+---------+---------+------------+
+| Id  | NAME     | ADDRESS        | CITY       | PH_NO      | INV_ID  | PID  | QUANTITY | INV_ID  | CUST_ID | INV_DATE   |
++-----+----------+----------------+------------+------------+---------+------+----------+---------+---------+------------+
+| 100 | Aswin    | Korangad       | Kozhikode  | 9044561120 |   16031 |  223 |        2 |   16031 |     100 | 2023-03-16 |
+| 100 | Aswin    | Korangad       | Kozhikode  | 9044561120 |   16031 |  226 |        2 |   16031 |     100 | 2023-03-16 |
+| 100 | Aswin    | Korangad       | Kozhikode  | 9044561120 |   16031 |  227 |        2 |   16031 |     100 | 2023-03-16 |
+| 106 | Vaishnav | Perinthalmanna | Palakkad   | 8713090012 |  202235 |  330 |        3 |  202235 |     106 | 2023-02-02 |
+| 101 | Maanas   | Thamarassery   | Calicut    | 9020112197 | 2022319 |  402 |        2 | 2022319 |     101 | 2023-02-02 |
+| 101 | Maanas   | Thamarassery   | Calicut    | 9020112197 | 2201235 |  404 |        3 | 2201235 |     101 | 2023-01-22 |
+| 101 | Maanas   | Thamarassery   | Calicut    | 9020112197 | 2201235 |  331 |        3 | 2201235 |     101 | 2023-01-22 |
+| 101 | Maanas   | Thamarassery   | Calicut    | 9020112197 | 2201235 |  330 |        3 | 2201235 |     101 | 2023-01-22 |
+| 100 | Aswin    | Korangad       | Kozhikode  | 9044561120 | 2201236 |  225 |        2 | 2201236 |     100 | 2023-01-22 |
+| 101 | Maanas   | Thamarassery   | Calicut    | 9020112197 | 2201239 |  223 |        2 | 2201239 |     101 | 2023-01-22 |
+| 101 | Maanas   | Thamarassery   | Calicut    | 9020112197 | 2201239 |  400 |        2 | 2201239 |     101 | 2023-01-22 |
+| 102 | Vishnu   | Kuthiravattam  | Kozhikode  | 9532147890 |    NULL | NULL |     NULL |    NULL |    NULL | NULL       |
+| 107 | John     | Kochi          | Kochi      |       NULL |    NULL | NULL |     NULL |    NULL |    NULL | NULL       |
+| 108 | Vivek    | Palarivattam   | Kochi      |       NULL |    NULL | NULL |     NULL |    NULL |    NULL | NULL       |
+| 109 | Vivek    | Thammanam      | Trivandrum |       NULL |    NULL | NULL |     NULL |    NULL |    NULL | NULL       |
+| 110 | Arun     | Kochi          | Kochi      |       NULL |    NULL | NULL |     NULL |    NULL |    NULL | NULL       |
++-----+----------+----------------+------------+------------+---------+------+----------+---------+---------+------------+
+16 rows in set (0.02 sec)
+
+
