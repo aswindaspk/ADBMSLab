@@ -134,18 +134,14 @@ mysql> SELECT * FROM CUSTOMER WHERE PH_NO IS NULL AND CITY="Kochi";
 -------------------------------------------------------------------------------------
 
 
-mysql> SELECT PNAME FROM PRODUCT WHERE PID IN(SELECT PID FROM INVOICE_ITEM);
+mysql> SELECT PNAME FROM PRODUCT WHERE PID IN(SELECT PID FROM INVOICE_ITEM WHERE QUANTITY =3);
 +--------------------+
 | PNAME              |
 +--------------------+
-| COLGATE T.P        |
-| PEPSI 1L           |
-| LAYS F.P           |
-| LAYS F.P           |
 | CARROT 1KG         |
-| CUCUMBER 1KG       |
-| TOY 5Y             |
-| PROCESSED FOOD F.P |
 | PROCESSED FOOD S.P |
+| CUCUMBER 1KG       |
 +--------------------+
-9 rows in set (0.00 sec)
+3 rows in set (0.04 sec)
+
+
