@@ -1,0 +1,39 @@
+1. Create a function to calculate price_range(low, medium, high) of each product. If price<=5 indicate as low, upto 50 indicate as medium, and above as high.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+mysql> CREATE FUNCTION PRICEIND(PRICE INT) RETURNS VARCHAR(20)
+    -> DETERMINISTIC
+    -> BEGIN
+    -> DECLARE PRICE_IND VARCHAR(20);
+    -> IF PRICE<=5 THEN SET PRICE_IND='LOW';
+    -> ELSEIF(PRICE>5 AND PRICE<=50) THEN SET PRICE_IND='MEDIUM';
+    -> ELSEIF PRICE>50 THEN SET PRICE_IND='HIGH';
+    -> END IF;
+    -> RETURN(PRICE_IND);
+    -> END //
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+mysql> SELECT PID,PNAME,PRICE,PRICEIND(PRICE) FROM PRODUCT; //
++-----+---------------------+-------+-----------------+
+| PID | PNAME               | PRICE | PRICEIND(PRICE) |
++-----+---------------------+-------+-----------------+
+| 220 | LEXI PEN            |    11 | MEDIUM          |
+| 221 | NIRAPARA MATTA RICE |    45 | MEDIUM          |
+| 223 | COLGATE T.P         |    54 | HIGH            |
+| 224 | PEPSI 250           |    34 | MEDIUM          |
+| 225 | PEPSI 1L            |    93 | HIGH            |
+| 226 | LAYS F.P            |    54 | HIGH            |
+| 227 | LAYS F.P            |    54 | HIGH            |
+| 228 | BISCUIT 250         |    54 | HIGH            |
+| 330 | CARROT 1KG          |    54 | HIGH            |
+| 331 | CUCUMBER 1KG        |    34 | MEDIUM          |
+| 400 | TOY 5Y              |   259 | HIGH            |
+| 401 | DINNRSET 10PC       |  1474 | HIGH            |
+| 402 | PROCESSED FOOD F.P  |   211 | HIGH            |
+| 404 | PROCESSED FOOD S.P  |   142 | HIGH            |
++-----+---------------------+-------+-----------------+
+14 rows in set (0.00 sec)
+
+
