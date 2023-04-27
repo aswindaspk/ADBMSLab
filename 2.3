@@ -31,8 +31,6 @@ mysql> SELECT * FROM CUST //;
 2. Create a trigger to handle inserts to the product relation ( if price < 5 then set price to 10).
 --------------------------------------------------------------------------------------------------
 
-mysql> INSERT INTO PRODUCT VALUES(502,'CANDY',4); //
-Query OK, 1 row affected (0.04 sec)
 
 mysql> CREATE TRIGGER CH_PR
     -> BEFORE insert
