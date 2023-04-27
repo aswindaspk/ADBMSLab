@@ -1,0 +1,73 @@
+
+1. Create a trigger to handle updates to the customer table.
+------------------------------------------------------------
+
+mysql> CREATE TRIGGER CUST_TRIG AFTER UPDATE ON CUSTOMER FOR EACH ROW BEGIN INSERT INTO CUST SET Id=NEW.Id, NAME=NEW.NAME,ADDRESS=NEW.ADDRESS,CITY=NEW.CITY,PH_NO=NEW.PH_NO; END //;
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> UPDATE CUSTOMER SET ADDRESS="Thamarassery" WHERE Id=100 //;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE CUSTOMER SET PH_NO=9912856730 WHERE Id=101 //;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM CUST //;
++-----+--------+--------------+-----------+------------+
+| Id  | NAME   | ADDRESS      | CITY      | PH_NO      |
++-----+--------+--------------+-----------+------------+
+| 100 | Aswin  | Thamarassery | Kozhikode | 9044561120 |
+| 101 | Maanas | Thamarassery | Calicut   | 9912856730 |
++-----+--------+--------------+-----------+------------+
+2 rows in set (0.00 sec)
+
+
+
+
+
+2. Create a trigger to handle inserts to the product relation ( if price < 5 then set price to 10).
+--------------------------------------------------------------------------------------------------
+
+mysql> INSERT INTO PRODUCT VALUES(502,'CANDY',4); //
+Query OK, 1 row affected (0.04 sec)
+
+mysql> CREATE TRIGGER CH_PR
+    -> BEFORE insert
+    -> ON PRODUCT
+    -> FOR EACH ROW
+    -> BEGIN
+    -> IF NEW.PRICE<5
+    -> THEN
+    -> SET NEW.PRICE=10;
+    -> END IF;
+    -> END; //
+Query OK, 0 rows affected (0.48 sec)
+
+mysql> INSERT INTO PRODUCT VALUES(503,'MUNCH',4); //
+Query OK, 1 row affected (0.06 sec)
+
+mysql> SELECT * FROM PRODUCT; //
++-----+---------------------+-------+
+| PID | PNAME               | PRICE |
++-----+---------------------+-------+
+| 220 | LEXI PEN            |     5 |
+| 221 | NIRAPARA MATTA RICE |    45 |
+| 223 | COLGATE T.P         |    54 |
+| 224 | PEPSI 250           |    34 |
+| 225 | PEPSI 1L            |    93 |
+| 226 | LAYS F.P            |    54 |
+| 227 | LAYS F.P            |    54 |
+| 228 | BISCUIT 250         |    54 |
+| 330 | CARROT 1KG          |    54 |
+| 331 | CUCUMBER 1KG        |    34 |
+| 400 | TOY 5Y              |   259 |
+| 401 | DINNRSET 10PC       |  1474 |
+| 402 | PROCESSED FOOD F.P  |   211 |
+| 404 | PROCESSED FOOD S.P  |   142 |
+| 501 | BAND-AID            |     2 |
+| 502 | CANDY               |     4 |
+| 503 | MUNCH               |    10 |
++-----+---------------------+-------+
+17 rows in set (0.00 sec)
+
