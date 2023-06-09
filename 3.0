@@ -1,0 +1,151 @@
+1.Write a MongoDB query to create an INVOICE database and collections (CUSTOMER, PRODUCT) and its corresponding documents.
+--------------------------------------------------------------------------------------------------------------------------
+
+
+> use invoice
+switched to db invoice
+> db.createCollection('customer')
+{ "ok" : 1 }
+> db.createCollection('product')
+{ "ok" : 1 }
+
+
+> show collections
+customer
+product
+> 
+
+> db.customer.insert({name:'Jacob',age:28,city:'Kochi',phno:9883315672})
+WriteResult({ "nInserted" : 1 })
+
+> db.customer.insertMany([
+... {name:'John',age:29,city:'Calicut',phno:8011288634},
+... {name:'Sam',age:24,city:'Kochi',phno:9901567712},
+... {name:'Ravi',age:28,city:'Calicut',phno:9112346543}])
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("648058e9defd91bd6340f85d"),
+		ObjectId("648058e9defd91bd6340f85e"),
+		ObjectId("648058e9defd91bd6340f85f")
+	]
+}
+
+
+
+
+
+2.Write a MongoDB query to find all documents from the collection CUSTOMER
+--------------------------------------------------------------------------
+
+> db.customer.find().pretty()
+{
+	"_id" : ObjectId("64805766defd91bd6340f85c"),
+	"name" : "Jacob",
+	"age" : 28,
+	"city" : "Kochi",
+	"phno" : 9883315672
+}
+{
+	"_id" : ObjectId("648058e9defd91bd6340f85d"),
+	"name" : "John",
+	"age" : 29,
+	"city" : "Calicut",
+	"phno" : 8011288634
+}
+{
+	"_id" : ObjectId("648058e9defd91bd6340f85e"),
+	"name" : "Sam",
+	"age" : 24,
+	"city" : "Kochi",
+	"phno" : 9901567712
+}
+{
+	"_id" : ObjectId("648058e9defd91bd6340f85f"),
+	"name" : "Ravi",
+	"age" : 28,
+	"city" : "Calicut",
+	"phno" : 9112346543
+}
+> 
+
+
+
+
+
+
+3.Write a MongoDB query to update the city in the collection CUSTOMER.
+----------------------------------------------------------------------
+
+
+> db.customer.update({city:'Calicut'},{$set:{city:'Kozhikode'}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.customer.find().pretty()
+{
+	"_id" : ObjectId("64805766defd91bd6340f85c"),
+	"name" : "Jacob",
+	"age" : 28,
+	"city" : "Kochi",
+	"phno" : 9883315672
+}
+{
+	"_id" : ObjectId("648058e9defd91bd6340f85d"),
+	"name" : "John",
+	"age" : 29,
+	"city" : "Kozhikode",
+	"phno" : 8011288634
+}
+{
+	"_id" : ObjectId("648058e9defd91bd6340f85e"),
+	"name" : "Sam",
+	"age" : 24,
+	"city" : "Kochi",
+	"phno" : 9901567712
+}
+{
+	"_id" : ObjectId("648058e9defd91bd6340f85f"),
+	"name" : "Ravi",
+	"age" : 28,
+	"city" : "Calicut",
+	"phno" : 9112346543
+}
+
+
+
+
+
+
+
+
+4.Write a MongoDB query to delete the first matched document whose city is “Calicut”.
+------------------------------------------------------------------------------------
+
+
+> db.customer.deleteOne({city:'Calicut'})
+{ "acknowledged" : true, "deletedCount" : 1 }
+> db.customer.find().pretty()
+{
+	"_id" : ObjectId("64805766defd91bd6340f85c"),
+	"name" : "Jacob",
+	"age" : 28,
+	"city" : "Kochi",
+	"phno" : 9883315672
+}
+{
+	"_id" : ObjectId("648058e9defd91bd6340f85d"),
+	"name" : "John",
+	"age" : 29,
+	"city" : "Kozhikode",
+	"phno" : 8011288634
+}
+{
+	"_id" : ObjectId("648058e9defd91bd6340f85e"),
+	"name" : "Sam",
+	"age" : 24,
+	"city" : "Kochi",
+	"phno" : 9901567712
+}
+
+
+
+
