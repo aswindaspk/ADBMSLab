@@ -1,0 +1,81 @@
+1.Write a MongoDB query to create a user “CUSTOMER1” and grant the read role in the INVOICE database.
+-----------------------------------------------------------------------------------------------------
+
+> db.createUser({user:"customer1",pwd:"1234",roles:[{role:"read",db:"invoice"}]})
+Successfully added user: {
+	"user" : "customer1",
+	"roles" : [
+		{
+			"role" : "read",
+			"db" : "invoice"
+		}
+	]
+}
+> 
+
+
+
+$ mongo -u customer1 -p
+MongoDB shell version v4.4.22
+Enter password: 
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("0a31b066-49fa-4d37-80b1-2f9007f429cd") }
+MongoDB server version: 4.4.22
+---
+The server generated these startup warnings when booting: 
+        2023-06-15T14:14:01.918+05:30: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+        2023-06-15T14:14:03.954+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+---
+
+
+
+2.Write a MongoDB query to create the backup for the INVOICE database.
+---------------------------------------------------------------------
+
+$ mongodump --db invoice
+2023-06-15T14:19:45.929+0530	writing invoice.product to dump/invoice/product.bson
+2023-06-15T14:19:45.999+0530	writing invoice.customer to dump/invoice/customer.bson
+2023-06-15T14:19:46.008+0530	done dumping invoice.customer (3 documents)
+2023-06-15T14:19:46.010+0530	done dumping invoice.product (0 documents)
+
+
+
+3.Write a MongoDB query to restore a particular database or a collection.
+-------------------------------------------------------------------------
+> use invoice
+switched to db invoice
+> db.dropDatabase()
+{ "dropped" : "invoice", "ok" : 1 }
+
+
+> show dbs
+admin   0.000GB
+aswin   0.000GB
+config  0.000GB
+local   0.000GB
+
+
+ksb@ksb-OptiPlex-3060:~$ mongorestore --db invoice dump/invoice
+2023-06-15T14:43:10.215+0530	The --db and --collection flags are deprecated for this use-case; please use --nsInclude instead, i.e. with --nsInclude=${DATABASE}.${COLLECTION}
+2023-06-15T14:43:10.216+0530	building a list of collections to restore from dump/invoice dir
+2023-06-15T14:43:10.216+0530	reading metadata for invoice.customer from dump/invoice/customer.metadata.json
+2023-06-15T14:43:10.216+0530	reading metadata for invoice.product from dump/invoice/product.metadata.json
+2023-06-15T14:43:10.523+0530	restoring invoice.customer from dump/invoice/customer.bson
+2023-06-15T14:43:10.537+0530	finished restoring invoice.customer (3 documents, 0 failures)
+2023-06-15T14:43:10.632+0530	restoring invoice.product from dump/invoice/product.bson
+2023-06-15T14:43:10.643+0530	finished restoring invoice.product (0 documents, 0 failures)
+2023-06-15T14:43:10.643+0530	no indexes to restore for collection invoice.product
+2023-06-15T14:43:10.643+0530	no indexes to restore for collection invoice.customer
+2023-06-15T14:43:10.643+0530	3 document(s) restored successfully. 0 document(s) failed to restore.
+ksb@ksb-OptiPlex-3060:~$ 
+
+
+
+> show dbs
+admin    0.000GB
+aswin    0.000GB
+config   0.000GB
+invoice  0.000GB
+local    0.000GB
+>
+
