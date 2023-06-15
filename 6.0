@@ -1,6 +1,8 @@
 
 1.Write a MongoDB query to create a user “CUSTOMER1” and grant the read role in the INVOICE database.
 -----------------------------------------------------------------------------------------------------
+> use admin
+switched to db admin
 
 > db.createUser({user:"customer1",pwd:"1234",roles:[{role:"read",db:"invoice"}]})
 Successfully added user: {
